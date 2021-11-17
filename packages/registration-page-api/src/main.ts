@@ -47,7 +47,6 @@ async function initSwaggerDocument(
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function initialize(): Promise<
   [configService: ConfigService, app: NestExpressApplication]
 > {
@@ -82,7 +81,6 @@ async function initialize(): Promise<
   return [configService, app];
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function startApp(
   configService: ConfigService,
   app: NestExpressApplication,
@@ -108,7 +106,7 @@ async function bootstrap() {
 }
 
 bootstrap().catch((err) => {
-  console.error(err); // eslint-disable-line no-console
-  console.error('Error bootstrapping the application, exiting...'); // eslint-disable-line no-console
+  console.error(err);
+  console.error('Error bootstrapping the application, exiting...');
   process.exit(1);
 });
