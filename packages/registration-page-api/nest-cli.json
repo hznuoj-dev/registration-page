@@ -1,0 +1,22 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "@nestjs/swagger/plugin",
+        "options": {
+          "classValidatorShim": true
+        }
+      }
+    ]
+  },
+  "assets": [
+    "auth/scripts/",
+    "mail/templates/",
+    "redis/scripts/",
+    "**/*.ejs",
+    "**/*.lua"
+  ],
+  "watchAssets": true
+}
