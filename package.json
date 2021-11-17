@@ -1,0 +1,12 @@
+{
+  "name": "registration-page-workspace",
+  "version": "0.0.0",
+  "main": "package.json",
+  "repository": "https://github.com/Dup4/registration-page.git",
+  "author": "Dup4 <lyuzhi.pan@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
+}
