@@ -57,7 +57,7 @@ async function initialize(): Promise<
       ).format('YYYY-MM-DD HH:mm:ss')})`
     : '';
 
-  if (cluster.isMaster)
+  if (cluster.isPrimary)
     Logger.log(
       `Starting ${packageInfo.name} version ${appVersion}${gitRepoVersion}`,
       'Bootstrap',
