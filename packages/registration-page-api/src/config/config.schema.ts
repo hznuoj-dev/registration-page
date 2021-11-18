@@ -113,10 +113,7 @@ class SecurityConfigRateLimit {
 
 class SecurityConfig {
   @IsString()
-  readonly sessionSecret: string;
-
-  @IsString()
-  readonly maintainceKey: string;
+  readonly adminToken: string;
 
   @ValidateNested()
   @Type(() => SecurityConfigRecaptcha)
