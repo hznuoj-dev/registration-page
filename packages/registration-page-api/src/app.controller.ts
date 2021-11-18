@@ -1,12 +1,22 @@
 import { Controller, Get } from '@nestjs/common';
+import { ApiTags, ApiProperty } from '@nestjs/swagger';
+
 import { AppService } from './app.service';
 
+class GetVersionDto {
+  @ApiProperty()
+  version: string;
+}
+
+@ApiTags('APP')
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Get('version')
+  async getVersion(): Promise<GetVersionDto> {
+    return {
+      version: this.appService.getVersion(),
+    };
   }
 }
