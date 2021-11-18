@@ -54,7 +54,7 @@ async function initialize(): Promise<
   const gitRepoVersion = appGitRepoInfo.abbreviatedSha
     ? ` (Git revision ${appGitRepoInfo.abbreviatedSha} on ${moment(
         appGitRepoInfo.committerDate,
-      ).format('YYYY-MM-DD H:mm:ss')})`
+      ).format('YYYY-MM-DD HH:mm:ss')})`
     : '';
 
   if (cluster.isMaster)
