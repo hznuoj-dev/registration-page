@@ -4,9 +4,14 @@ import { AppService } from '@/app.service';
 
 import { SharedModule } from '@/shared.module';
 import { ClusterModule } from '@/cluster/cluster.module';
+import { RedisModule } from '@/redis/redis.module';
 
 @Module({
-  imports: [SharedModule, forwardRef(() => ClusterModule)],
+  imports: [
+    SharedModule,
+    forwardRef(() => ClusterModule),
+    forwardRef(() => RedisModule),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
