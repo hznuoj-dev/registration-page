@@ -119,6 +119,8 @@ export class AuthController {
       await this.authSessionService.endSession(sessionKey);
     }
 
+    console.log(currentUser);
+
     return {};
   }
 
@@ -135,12 +137,6 @@ export class AuthController {
       if (currentUser) {
         return {
           error: SendEmailVerificationCodeResponseError.ALREADY_LOGGEDIN,
-        };
-      }
-
-      if (!(await this.userService.checkEmailAvailability(request.email))) {
-        return {
-          error: SendEmailVerificationCodeResponseError.DUPLICATE_EMAIL,
         };
       }
     } else {

@@ -48,6 +48,23 @@ export class AuthService {
       }
     }
 
+    const revoke = async () => {
+      if (
+        this.configService.config.preference.security.requireEmailVerification
+      ) {
+        await this.authEmailVerificationCodeService.revoke(
+          email,
+          emailVerificationCode,
+        );
+      }
+    };
+
+    const user = await this.userService.findUserByEmail(email);
+    if (user) {
+      await revoke();
+      return [null, user];
+    }
+
     try {
       let user: UserEntity;
       await this.connection.transaction(
@@ -61,15 +78,7 @@ export class AuthService {
         },
       );
 
-      if (
-        this.configService.config.preference.security.requireEmailVerification
-      ) {
-        await this.authEmailVerificationCodeService.revoke(
-          email,
-          emailVerificationCode,
-        );
-      }
-
+      await revoke();
       return [null, user];
     } catch (e) {
       if (!(await this.userService.checkEmailAvailability(email))) {

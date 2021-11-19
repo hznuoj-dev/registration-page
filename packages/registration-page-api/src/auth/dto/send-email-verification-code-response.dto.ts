@@ -1,8 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export enum SendEmailVerificationCodeResponseError {
-  PERMISSION_DENIED = 'PERMISSION_DENIED', // Change email
-  DUPLICATE_EMAIL = 'DUPLICATE_EMAIL', // Change email
+  PERMISSION_DENIED = 'PERMISSION_DENIED',
   ALREADY_LOGGEDIN = 'ALREADY_LOGGEDIN',
   FAILED_TO_SEND = 'FAILED_TO_SEND',
   RATE_LIMITED = 'RATE_LIMITED',
