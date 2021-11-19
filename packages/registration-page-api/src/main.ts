@@ -1,3 +1,4 @@
+import util from 'util';
 import cluster from 'cluster';
 import path from 'path';
 
@@ -21,6 +22,10 @@ import { AppModule } from '@/app.module';
 import packageInfo from './package.json';
 
 export const appGitRepoInfo = getGitRepoInfo();
+
+String.prototype.format = function format(...args: unknown[]) {
+  return util.format.call(undefined, this, ...args);
+};
 
 async function initSwaggerDocument(
   app: NestExpressApplication,

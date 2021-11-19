@@ -115,6 +115,9 @@ class SecurityConfig {
   @IsString()
   readonly adminToken: string;
 
+  @IsString()
+  readonly sessionSecret: string;
+
   @ValidateNested()
   @Type(() => SecurityConfigRecaptcha)
   readonly recaptcha: SecurityConfigRecaptcha;

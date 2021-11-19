@@ -9,7 +9,7 @@ import { ConfigService } from '@/config/config.service';
 import { Locale } from '@/common/locale.type';
 
 export enum MailTemplate {
-  RegisterVerificationCode = 'register_verification_code',
+  LoginVerificationCode = 'login_verification_code',
 }
 
 @Injectable()

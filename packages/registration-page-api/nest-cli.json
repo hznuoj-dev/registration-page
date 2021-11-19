@@ -1,4 +1,5 @@
 {
+  "language": "ts",
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
   "compilerOptions": {
@@ -9,14 +10,8 @@
           "classValidatorShim": true
         }
       }
-    ]
-  },
-  "assets": [
-    "auth/scripts/",
-    "mail/templates/",
-    "redis/scripts/",
-    "**/*.ejs",
-    "**/*.lua"
-  ],
-  "watchAssets": true
+    ],
+    "assets": ["**/*.ejs", "**/*.lua"],
+    "watchAssets": true
+  }
 }
