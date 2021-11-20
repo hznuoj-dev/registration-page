@@ -3,7 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-import packageInfo from './package.json';
+import packageInfo from '../package.json';
 
 describe('AppController', () => {
   let appController: AppController;

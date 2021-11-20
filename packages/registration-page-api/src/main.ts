@@ -17,9 +17,9 @@ import moment from 'moment';
 
 import { ConfigService } from '@/config/config.service';
 import { ClusterService } from '@/cluster/cluster.service';
-import { AppModule } from '@/app.module';
+import { AppModule } from '@/app/app.module';
 
-import packageInfo from './package.json';
+import packageInfo from '@/package.json';
 
 export const appGitRepoInfo = getGitRepoInfo();
 

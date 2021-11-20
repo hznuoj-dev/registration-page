@@ -8,14 +8,16 @@ import {
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthMiddleware } from './auth/auth.middleware';
+
+import { AuthMiddleware } from '@/auth/auth.middleware';
 
 import { SharedModule } from '@/shared.module';
 import { ClusterModule } from '@/cluster/cluster.module';
 import { RedisModule } from '@/redis/redis.module';
 import { DatabaseModule } from '@/database/database.module';
-import { UserModule } from './user/user.module';
-import { AuthModule } from './auth/auth.module';
+import { UserModule } from '@/user/user.module';
+import { AuthModule } from '@/auth/auth.module';
+import { RegistrationModule } from '@/registration/registration.module';
 
 @Module({
   imports: [
@@ -25,6 +27,7 @@ import { AuthModule } from './auth/auth.module';
     forwardRef(() => DatabaseModule),
     forwardRef(() => UserModule),
     forwardRef(() => AuthModule),
+    forwardRef(() => RegistrationModule),
   ],
   controllers: [AppController],
   providers: [AppService],
