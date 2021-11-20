@@ -6,7 +6,6 @@ import { Connection } from 'typeorm';
 import { UserEntity } from '@/user/user.entity';
 import { UserService } from '@/user/user.service';
 import { ConfigService } from '@/config/config.service';
-import { delay, DELAY_FOR_SECURITY } from '@/common/delay';
 
 import { AuthEmailVerificationCodeService } from './auth-email-verification-code.service';
 
@@ -35,9 +34,6 @@ export class AuthService {
     if (
       this.configService.config.preference.security.requireEmailVerification
     ) {
-      // Delay for security
-      await delay(DELAY_FOR_SECURITY);
-
       if (
         !(await this.authEmailVerificationCodeService.verify(
           email,
