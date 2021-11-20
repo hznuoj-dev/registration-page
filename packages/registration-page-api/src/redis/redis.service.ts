@@ -13,9 +13,12 @@ export class RedisService implements OnModuleInit {
   private readonly untilReady: Promise<void>;
 
   constructor(private readonly configService: ConfigService) {
-    this.client = new Redis(this.configService.config.services.redis, {
-      enableReadyCheck: true,
-    });
+    this.client = new Redis(
+      this.configService.config.services.redis.connectString,
+      {
+        enableReadyCheck: true,
+      },
+    );
 
     // TODO: Handle errors after connected?
     this.untilReady = new Promise((resolve, reject) => {
@@ -42,6 +45,10 @@ export class RedisService implements OnModuleInit {
 
   async cacheDelete(key: string): Promise<void> {
     await this.client.del(key);
+  }
+
+  getRedisKeyWithNamespace(key: string): string {
+    return `${this.configService.config.services.redis.namespace}:${key}`;
   }
 
   /**

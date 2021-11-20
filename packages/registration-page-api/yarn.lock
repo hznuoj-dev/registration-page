@@ -2980,6 +2980,11 @@ ioredis@^4.28.0:
     redis-parser "^3.0.0"
     standard-as-callback "^2.1.0"
 
+ip2region@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/ip2region/-/ip2region-2.2.0.tgz#fa728b1a48e3ba34500f243da27451d7814ff3c8"
+  integrity sha512-ILhlKg/07LSOvBEGhH9WVlCeWBOCmQgHXyv7SXmaWlnf0r8neJgiInJ8fyluwN7ZuUnSoLFDKbwmB39+mGvfCw==
+
 ipaddr.js@1.9.1:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-1.9.1.tgz#bff38543eeb8984825079ff3a2a8e6cbd46781b3"

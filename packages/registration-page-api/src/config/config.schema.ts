@@ -59,6 +59,14 @@ class ServicesConfigDatabase {
   readonly timezone?: string = 'local';
 }
 
+class ServiceConfigRedis {
+  @IsString()
+  readonly namespace?: string = 'registration-page';
+
+  @IsString()
+  readonly connectString: string;
+}
+
 class ServicesConfigMail {
   @IsEmail()
   @IsOptional()
@@ -72,8 +80,8 @@ class ServicesConfig {
   @Type(() => ServicesConfigDatabase)
   readonly database: ServicesConfigDatabase;
 
-  @IsString()
-  readonly redis: string;
+  @Type(() => ServiceConfigRedis)
+  readonly redis: ServiceConfigRedis;
 
   @ValidateNested()
   @Type(() => ServicesConfigMail)
@@ -178,6 +186,27 @@ class EventReportConfig {
   readonly proxyUrl?: string;
 }
 
+class VendorIp2RegionConfig {
+  @IsString()
+  @IsOptional()
+  readonly ipv4db?: string;
+
+  @IsString()
+  @IsOptional()
+  readonly ipv6db?: string;
+
+  @IsString()
+  @IsOptional()
+  disableIpv6?: boolean;
+}
+
+class VendorConfig {
+  @ValidateNested()
+  @Type(() => VendorIp2RegionConfig)
+  @IsOptional()
+  readonly ip2region: VendorIp2RegionConfig;
+}
+
 export class AppConfig {
   @ValidateNested()
   @Type(() => ServerConfig)
@@ -198,4 +227,8 @@ export class AppConfig {
   @ValidateNested()
   @Type(() => EventReportConfig)
   readonly eventReport: EventReportConfig;
+
+  @ValidateNested()
+  @Type(() => VendorConfig)
+  readonly vendor: VendorConfig;
 }

@@ -19,19 +19,31 @@ export enum EmailVerificationCodeType {
 @Injectable()
 export class AuthEmailVerificationCodeService {
   private readonly redis: Redis;
+  private readonly REDIS_KEY_EMAIL_VERIFICATION_CODE_RATE_LIMIT: string;
+  private readonly REDIS_KEY_EMAIL_VERIFICATION_CODE: string;
 
   constructor(
     @Inject(forwardRef(() => RedisService))
     private readonly redisService: RedisService,
   ) {
     this.redis = this.redisService.getClient();
+
+    this.REDIS_KEY_EMAIL_VERIFICATION_CODE_RATE_LIMIT =
+      this.redisService.getRedisKeyWithNamespace(
+        REDIS_KEY_EMAIL_VERIFICATION_CODE_RATE_LIMIT,
+      );
+
+    this.REDIS_KEY_EMAIL_VERIFICATION_CODE =
+      this.redisService.getRedisKeyWithNamespace(
+        REDIS_KEY_EMAIL_VERIFICATION_CODE,
+      );
   }
 
   async generate(email: string): Promise<string> {
     // If rate limit key already exists it will fail
     if (
       !(await this.redis.set(
-        REDIS_KEY_EMAIL_VERIFICATION_CODE_RATE_LIMIT.format(email),
+        this.REDIS_KEY_EMAIL_VERIFICATION_CODE_RATE_LIMIT.format(email),
         '1',
         'EX',
         RATE_LIMIT,
@@ -47,7 +59,7 @@ export class AuthEmailVerificationCodeService {
     });
 
     await this.redis.set(
-      REDIS_KEY_EMAIL_VERIFICATION_CODE.format(email, code),
+      this.REDIS_KEY_EMAIL_VERIFICATION_CODE.format(email, code),
       '1',
       'EX',
       CODE_VALID_TIME,
@@ -59,12 +71,14 @@ export class AuthEmailVerificationCodeService {
   async verify(email: string, code: string): Promise<boolean> {
     return Boolean(
       await this.redis.get(
-        REDIS_KEY_EMAIL_VERIFICATION_CODE.format(email, code),
+        this.REDIS_KEY_EMAIL_VERIFICATION_CODE.format(email, code),
       ),
     );
   }
 
   async revoke(email: string, code: string): Promise<void> {
-    await this.redis.del(REDIS_KEY_EMAIL_VERIFICATION_CODE.format(email, code));
+    await this.redis.del(
+      this.REDIS_KEY_EMAIL_VERIFICATION_CODE.format(email, code),
+    );
   }
 }

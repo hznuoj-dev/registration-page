@@ -13,7 +13,7 @@ import { RedisService } from '@/redis/redis.service';
 
 // Refer to scripts/session-manager.lua for session management details
 interface RedisWithSessionManager extends Redis {
-  callSessionManager(...args: ValueType[]): Promise<unknown>;
+  callSessionManager(namespace: string, ...args: ValueType[]): Promise<unknown>;
 }
 
 interface SessionInfoInternal {
@@ -45,6 +45,13 @@ export class AuthSessionService {
     });
   }
 
+  private async callSessionManager(...args: ValueType[]): Promise<unknown> {
+    return await this.redis.callSessionManager(
+      this.configService.config.services.redis.namespace,
+      ...args,
+    );
+  }
+
   async newSession(
     user: UserEntity,
     loginIp: string,
@@ -57,7 +64,7 @@ export class AuthSessionService {
       loginTime: timeStamp,
     };
 
-    const sessionId = await this.redis.callSessionManager(
+    const sessionId = await this.callSessionManager(
       'new',
       timeStamp,
       user.id,
@@ -85,14 +92,14 @@ export class AuthSessionService {
   }
 
   async revokeSession(userId: number, sessionId: number): Promise<void> {
-    await this.redis.callSessionManager('revoke', userId, sessionId);
+    await this.callSessionManager('revoke', userId, sessionId);
   }
 
   async revokeAllSessionsExcept(
     userId: number,
     sessionId: number,
   ): Promise<void> {
-    await this.redis.callSessionManager('revoke_all_except', userId, sessionId);
+    await this.callSessionManager('revoke_all_except', userId, sessionId);
   }
 
   async endSession(sessionKey: string): Promise<void> {
@@ -120,7 +127,7 @@ export class AuthSessionService {
       }
       const [userId, sessionId] = this.decodeSessionKey(sessionKey);
 
-      const success = await this.redis.callSessionManager(
+      const success = await this.callSessionManager(
         'access',
         +new Date(),
         userId,
@@ -138,7 +145,7 @@ export class AuthSessionService {
   }
 
   async listUserSessions(userId: number): Promise<SessionInfo[]> {
-    const result = (await this.redis.callSessionManager('list', userId)) as [
+    const result = (await this.callSessionManager('list', userId)) as [
       sessionId: string,
       lastAccessTime: string,
       sessionInfo: string,

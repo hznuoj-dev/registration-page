@@ -1,21 +1,23 @@
 -- I do NOT use the KEYS array because I don't use Redis cluster currently.
 -- In the future if I use cluster, I'll use key{session} to let ALL session related keys to be put to the same slot.
 
--- We preserve the most recent 20 sessions for a user. The older sessions will be removed once exceeded this limit.
-local MAX_SESSIONS_PER_USER = 20
+local NAMESPACE = ARGV[1]
+
+-- We preserve the most recent 1 sessions for a user. The older sessions will be removed once exceeded this limit.
+local MAX_SESSIONS_PER_USER = 1
 
 -- We use a auto increment ID as session's ID.
-local REDIS_KEY_USER_SESSION_ID_AUTO_INCREMENT = "user-session-auto-increment"
+local REDIS_KEY_USER_SESSION_ID_AUTO_INCREMENT = NAMESPACE .. ":user-session-auto-increment"
 
 -- We manage a user's session list with a ZSET.
 -- The score of a item is that session's timestamp.
 -- The member of a item is that session's ID.
 -- Whenever a session is accessed, the timestamp will be refreshed to the current time.
 -- When a new session is created, the old sessions will be evicted.
-local REDIS_KEY_USER_SESSION_LIST = "user-session-list:%d";
+local REDIS_KEY_USER_SESSION_LIST = NAMESPACE .. ":user-session-list:%d";
 
 -- We store ALL the real session info in a map, from the session ID to the JSON serialized "session info".
-local REDIS_KEY_USER_SESSION_INFO_MAP = "user-session-info-map";
+local REDIS_KEY_USER_SESSION_INFO_MAP = NAMESPACE .. ":user-session-info-map";
 
 -- Create a new session (when the user logged in and so on)
 -- The session info is immutable for a session
@@ -126,14 +128,14 @@ local function list_sessions(user_id)
 end
 
 -- Handle commands from Redis client
-if ARGV[1] == "new" then
-  return new_session(ARGV[2], ARGV[3], ARGV[4])
-elseif ARGV[1] == "access" then
-  return access_session(ARGV[2], ARGV[3], ARGV[4])
-elseif ARGV[1] == "revoke" then
-  return revoke_session(ARGV[2], ARGV[3])
-elseif ARGV[1] == "revoke_all_except" then
-  return revoke_all_sessions_except(ARGV[2], ARGV[3])
-elseif ARGV[1] == "list" then
-  return list_sessions(ARGV[2])
+if ARGV[2] == "new" then
+  return new_session(ARGV[3], ARGV[4], ARGV[5])
+elseif ARGV[2] == "access" then
+  return access_session(ARGV[3], ARGV[4], ARGV[5])
+elseif ARGV[2] == "revoke" then
+  return revoke_session(ARGV[3], ARGV[4])
+elseif ARGV[2] == "revoke_all_except" then
+  return revoke_all_sessions_except(ARGV[3], ARGV[4])
+elseif ARGV[2] == "list" then
+  return list_sessions(ARGV[3])
 end

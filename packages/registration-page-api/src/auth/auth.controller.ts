@@ -14,6 +14,7 @@ import { AuthService } from './auth.service';
 import { AuthSessionService } from './auth-session.service';
 import { UserEntity } from '@/user/user.entity';
 import { UserService } from '@/user/user.service';
+import { AuditService } from '@/audit/audit.service';
 
 import {
   SendEmailVerificationCodeRequestDto,
@@ -37,6 +38,7 @@ export class AuthController {
     private readonly mailService: MailService,
     private readonly userService: UserService,
     private readonly authSessionService: AuthSessionService,
+    private readonly auditService: AuditService,
   ) {}
 
   @Get('getSessionInfo')
@@ -47,6 +49,7 @@ export class AuthController {
       "In order to support JSONP, this API doesn't use HTTP Authorization header.",
   })
   async getSessionInfo(
+    @Req() req: RequestWithSession,
     @Query() request: GetSessionInfoRequestDto,
   ): Promise<GetSessionInfoResponseDto> {
     const [, user] = await this.authSessionService.accessSession(request.token);
@@ -95,6 +98,8 @@ export class AuthController {
       };
     }
 
+    await this.auditService.log(user.id, 'auth.login');
+
     return {
       token: await this.authSessionService.newSession(
         user,
@@ -119,7 +124,9 @@ export class AuthController {
       await this.authSessionService.endSession(sessionKey);
     }
 
-    console.log(currentUser);
+    if (currentUser) {
+      await this.auditService.log('auth.logout');
+    }
 
     return {};
   }
