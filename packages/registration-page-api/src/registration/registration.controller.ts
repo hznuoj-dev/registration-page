@@ -5,6 +5,8 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { RegistrationService } from './registration.service';
 
+import { MailService, MailTemplate } from '@/mail/mail.service';
+
 import {
   AddOrganizationRequestDto,
   AddOrganizationResponseDto,
@@ -19,11 +21,15 @@ import {
   RegistrationResponseDto,
   RegistrationResponseError,
 } from './dto';
+import { Locale } from '@/common/locale.type';
 
 @ApiTags('Registration')
 @Controller('registration')
 export class RegistrationController {
-  constructor(private readonly registrationService: RegistrationService) {}
+  constructor(
+    private readonly registrationService: RegistrationService,
+    private readonly mailService: MailService,
+  ) {}
 
   @ApiBearerAuth()
   @Post('registration')
@@ -99,13 +105,33 @@ export class RegistrationController {
     const registration = await this.registrationService.findRegistrationById(
       request.registrationId,
     );
+
     if (!registration) {
       return {
         error: ApproveResponseError.NO_SUCH_REGISTRATION_ID,
       };
     }
 
+    if (registration.approve === true) {
+      return {
+        error: ApproveResponseError.ALREADY_APPROVED,
+      };
+    }
+
     await this.registrationService.approve(registration);
+
+    await this.mailService.sendMail(
+      MailTemplate.Approve,
+      Locale.en_US,
+      {
+        email: (await registration.user).email,
+        teamName: registration.teamName,
+        school: (await registration.organization).organizationName,
+      },
+      (
+        await registration.user
+      ).email,
+    );
 
     return {};
   }

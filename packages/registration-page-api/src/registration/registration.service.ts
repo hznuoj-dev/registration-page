@@ -36,7 +36,10 @@ export class RegistrationService {
     id: number,
   ): Promise<RegistrationOrganizationEntity> {
     return await this.registrationOrganizationRepository.findOne({
-      id,
+      where: {
+        id,
+      },
+      relations: ['user', 'organization'],
     });
   }
 

@@ -10,6 +10,7 @@ import { Locale } from '@/common/locale.type';
 
 export enum MailTemplate {
   LoginVerificationCode = 'login_verification_code',
+  Approve = 'approve',
 }
 
 @Injectable()
@@ -44,6 +45,7 @@ export class MailService {
       await ejs.renderFile(this.resolveTemplate(template, locale), {
         ...data,
         siteName: this.configService.config.preference.siteName,
+        date: new Date().toLocaleDateString(),
       })
     ).trim();
 
