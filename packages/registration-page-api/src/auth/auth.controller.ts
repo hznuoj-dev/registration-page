@@ -134,7 +134,7 @@ export class AuthController {
   @Post('sendEmailVerificationCode')
   @ApiBearerAuth()
   @ApiOperation({
-    summary: 'Send email verification code for login',
+    summary: 'Send email verification code for login.',
   })
   async sendEmailVerificationCode(
     @CurrentUser() currentUser: UserEntity,

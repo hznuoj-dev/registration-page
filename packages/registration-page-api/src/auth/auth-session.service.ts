@@ -125,6 +125,7 @@ export class AuthSessionService {
           },
         ];
       }
+
       const [userId, sessionId] = this.decodeSessionKey(sessionKey);
 
       const success = await this.callSessionManager(
