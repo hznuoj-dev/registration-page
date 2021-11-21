@@ -7,6 +7,8 @@ export * from './approve-responce.dto';
 export * from './get-registration-list-request.dto';
 export * from './get-registration-list-response.dto';
 
+export * from './get-registration-response.dto';
+
 export * from './registration-meta.dto';
 
 export * from './registration-request.dto';

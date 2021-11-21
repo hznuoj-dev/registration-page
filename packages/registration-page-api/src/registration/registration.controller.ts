@@ -18,6 +18,8 @@ import {
   GetRegistrationListRequestDto,
   GetRegistrationListResponseDto,
   GetRegistrationListResponseError,
+  GetRegistrationResponseDto,
+  GetRegistrationResponseError,
   RegistrationRequestDto,
   RegistrationResponseDto,
   RegistrationResponseError,
@@ -32,6 +34,40 @@ export class RegistrationController {
     private readonly mailService: MailService,
     private readonly auditService: AuditService,
   ) {}
+
+  @ApiBearerAuth()
+  @Post('getRegistration')
+  @ApiOperation({
+    summary: 'get registration.',
+  })
+  @HttpCode(200)
+  async getRegistration(
+    @CurrentUser() currentUser: UserEntity,
+  ): Promise<GetRegistrationResponseDto> {
+    if (!currentUser || currentUser.isAdmin) {
+      return {
+        error: GetRegistrationResponseError.PERMISSION_DENIED,
+      };
+    }
+
+    const registration = await this.registrationService.findRegistrationByUser(
+      currentUser,
+    );
+
+    if (!registration) {
+      return {
+        error: GetRegistrationResponseError.NO_SUCH_REGISTRATION,
+      };
+    }
+
+    return {
+      registrationMeta: {
+        email: currentUser.email,
+        teamName: registration.teamName,
+        organizationName: (await registration.organization).organizationName,
+      },
+    };
+  }
 
   @ApiBearerAuth()
   @Post('registration')

@@ -28,13 +28,19 @@ export class RegistrationService {
 
   async findRegistrationByUser(user: UserEntity): Promise<RegistrationEntity> {
     return await this.registrationRepository.findOne({
-      userId: user.id,
+      where: {
+        userId: user.id,
+      },
+      relations: ['user', 'organization'],
     });
   }
 
   async findRegistrationById(id: number): Promise<RegistrationEntity> {
     return await this.registrationRepository.findOne({
-      registrationId: id,
+      where: {
+        registrationId: id,
+      },
+      relations: ['user', 'organization'],
     });
   }
 
