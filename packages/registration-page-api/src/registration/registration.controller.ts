@@ -40,7 +40,7 @@ export class RegistrationController {
     @CurrentUser() currentUser: UserEntity,
     @Body() request: RegistrationRequestDto,
   ): Promise<RegistrationResponseDto> {
-    if (!currentUser) {
+    if (!currentUser || currentUser.isAdmin) {
       return {
         error: RegistrationResponseError.PERMISSION_DENIED,
       };
