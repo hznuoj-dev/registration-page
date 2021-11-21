@@ -9,6 +9,7 @@ import { RegistrationOrganizationEntity } from './registration-organization.enti
 
 import { MailModule } from '@/mail/mail.module';
 import { AuditModule } from '@/audit/audit.module';
+import { EventReportModule } from '@/event-report/event-report.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AuditModule } from '@/audit/audit.module';
     TypeOrmModule.forFeature([RegistrationOrganizationEntity]),
     forwardRef(() => MailModule),
     forwardRef(() => AuditModule),
+    forwardRef(() => EventReportModule),
   ],
   controllers: [RegistrationController],
   providers: [RegistrationService],

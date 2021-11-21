@@ -7,6 +7,10 @@ import { RegistrationService, RegistrationType } from './registration.service';
 
 import { MailService, MailTemplate } from '@/mail/mail.service';
 import { AuditService } from '@/audit/audit.service';
+import {
+  EventReportService,
+  EventReportType,
+} from '@/event-report/event-report.service';
 
 import {
   AddOrganizationRequestDto,
@@ -33,6 +37,7 @@ export class RegistrationController {
     private readonly registrationService: RegistrationService,
     private readonly mailService: MailService,
     private readonly auditService: AuditService,
+    private readonly eventReportService: EventReportService,
   ) {}
 
   @ApiBearerAuth()
@@ -100,15 +105,23 @@ export class RegistrationController {
     );
 
     if (registrationType !== RegistrationType.NothingHappened) {
-      await this.auditService.log(
-        currentUser.id,
-        `registration.${registrationType}`,
-        {
-          teamName: request.teamName,
-          organizationId: organization.id,
-          organizationName: organization.organizationName,
-        },
-      );
+      const action = `registration.${registrationType}`;
+      const details = {
+        teamName: request.teamName,
+        organizationId: organization.id,
+        organizationName: organization.organizationName,
+      };
+
+      await this.auditService.log(currentUser.id, action, details);
+
+      const message = `user: ${currentUser.email}, ${action}, ${JSON.stringify(
+        details,
+      )}`;
+
+      this.eventReportService.report({
+        type: EventReportType.Info,
+        message,
+      });
     }
 
     return {};

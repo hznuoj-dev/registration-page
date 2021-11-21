@@ -18,6 +18,7 @@ import { DatabaseModule } from '@/database/database.module';
 import { UserModule } from '@/user/user.module';
 import { AuthModule } from '@/auth/auth.module';
 import { RegistrationModule } from '@/registration/registration.module';
+import { EventReportModule } from '@/event-report/event-report.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { RegistrationModule } from '@/registration/registration.module';
     forwardRef(() => UserModule),
     forwardRef(() => AuthModule),
     forwardRef(() => RegistrationModule),
+    forwardRef(() => EventReportModule),
   ],
   controllers: [AppController],
   providers: [AppService],

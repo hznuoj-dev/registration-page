@@ -7,6 +7,7 @@ import ejs from 'ejs';
 
 import { ConfigService } from '@/config/config.service';
 import { Locale } from '@/common/locale.type';
+import moment from 'moment';
 
 export enum MailTemplate {
   LoginVerificationCode = 'login_verification_code',
@@ -45,7 +46,7 @@ export class MailService {
       await ejs.renderFile(this.resolveTemplate(template, locale), {
         ...data,
         siteName: this.configService.config.preference.siteName,
-        date: new Date().toLocaleDateString(),
+        date: moment().format('YYYY-MM-DD HH:mm:ss'),
       })
     ).trim();
 
