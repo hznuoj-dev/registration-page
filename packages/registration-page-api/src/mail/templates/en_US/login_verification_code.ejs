@@ -1,10 +1,18 @@
 Your email verification code for <%= siteName %>
-<p>
-	Your email verification code for <%= siteName %> is <b><%= code %></b>. It will expire in 15 minutes.
-</p>
-<p>
-	If you are not registering on <%= siteName %>, please ignore this email.
-</p>
-<p>
-	The <%= siteName %> Team.
-</p>
+<html>
+
+<body>
+  <p>
+    Your email verification code for <%= siteName %> is <b><%= code %></b>. It will expire in 15 minutes.
+  </p>
+  <p>
+    If you are not registering on <%= siteName %>, please ignore this email.
+  </p>
+
+  <p style="text-align:right;">
+    <%= siteName %> <br />
+    <%= date %>
+  </p>
+</body>
+
+</html>
