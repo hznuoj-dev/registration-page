@@ -3,9 +3,10 @@ import { UserEntity } from '@/user/user.entity';
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
-import { RegistrationService } from './registration.service';
+import { RegistrationService, RegistrationType } from './registration.service';
 
 import { MailService, MailTemplate } from '@/mail/mail.service';
+import { AuditService } from '@/audit/audit.service';
 
 import {
   AddOrganizationRequestDto,
@@ -29,6 +30,7 @@ export class RegistrationController {
   constructor(
     private readonly registrationService: RegistrationService,
     private readonly mailService: MailService,
+    private readonly auditService: AuditService,
   ) {}
 
   @ApiBearerAuth()
@@ -55,11 +57,23 @@ export class RegistrationController {
       };
     }
 
-    await this.registrationService.registration(
+    const registrationType = await this.registrationService.registration(
       currentUser,
       organization,
       request.teamName,
     );
+
+    if (registrationType !== RegistrationType.NothingHappened) {
+      await this.auditService.log(
+        currentUser.id,
+        `registration.${registrationType}`,
+        {
+          teamName: request.teamName,
+          organizationId: organization.id,
+          organizationName: organization.organizationName,
+        },
+      );
+    }
 
     return {};
   }

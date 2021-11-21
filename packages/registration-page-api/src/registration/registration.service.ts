@@ -9,6 +9,12 @@ import { RegistrationOrganizationEntity } from './registration-organization.enti
 
 import { RegistrationMetaDto } from './dto';
 
+export enum RegistrationType {
+  New = 'new',
+  Modify = 'modify',
+  NothingHappened = 'nothingHappened',
+}
+
 @Injectable()
 export class RegistrationService {
   constructor(
@@ -36,10 +42,7 @@ export class RegistrationService {
     id: number,
   ): Promise<RegistrationOrganizationEntity> {
     return await this.registrationOrganizationRepository.findOne({
-      where: {
-        id,
-      },
-      relations: ['user', 'organization'],
+      id,
     });
   }
 
@@ -47,18 +50,35 @@ export class RegistrationService {
     user: UserEntity,
     organization: RegistrationOrganizationEntity,
     teamName: string,
-  ): Promise<void> {
+  ): Promise<RegistrationType> {
+    let registrationType = RegistrationType.NothingHappened;
     let registration = await this.findRegistrationByUser(user);
 
     if (!registration) {
       registration = new RegistrationEntity();
       registration.userId = user.id;
+      registrationType = RegistrationType.New;
+    }
+
+    if (
+      organization.id !== registration.organizationId ||
+      teamName !== registration.teamName
+    ) {
+      if (registrationType !== RegistrationType.New) {
+        registrationType = RegistrationType.Modify;
+      }
     }
 
     registration.organizationId = organization.id;
     registration.teamName = teamName;
 
+    if (registrationType !== RegistrationType.NothingHappened) {
+      registration.approve = false;
+    }
+
     await this.registrationRepository.save(registration);
+
+    return registrationType;
   }
 
   async getRegistrationList(
