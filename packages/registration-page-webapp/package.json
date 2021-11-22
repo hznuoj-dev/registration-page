@@ -1,8 +1,11 @@
 {
   "private": true,
   "scripts": {
-    "start": "umi dev",
-    "build": "umi build",
+    "start": "cross-env umi dev",
+    "start:no-mock": "cross-env MOCK=none umi dev",
+    "start:no-ui": "cross-env UMI_UI=none umi dev",
+    "build": "cross-env NODE_OPTIONS=--max-old-space-size=4096 umi build",
+    "generate-api": "node scripts/generate-api.js http://localhost:3000/api/docs-json",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "test": "umi-test",
@@ -21,6 +24,8 @@
   },
   "dependencies": {
     "@ant-design/pro-layout": "^6.5.0",
+    "axios": "^0.24.0",
+    "browserslist": "^4.18.1",
     "react": "17.x",
     "react-dom": "17.x",
     "umi": "^3.5.20"
@@ -30,9 +35,12 @@
     "@types/react-dom": "^17.0.0",
     "@umijs/preset-react": "1.x",
     "@umijs/test": "^3.5.20",
+    "cross-env": "^7.0.3",
+    "dtsgenerator": "2.7.0",
+    "fs-extra": "^10.0.0",
     "lint-staged": "^10.0.7",
     "prettier": "^2.2.0",
-    "typescript": "^4.1.2",
+    "typescript": "^4.5.2",
     "yorkie": "^2.0.0"
   }
 }
