@@ -14,7 +14,7 @@ interface IpcMessage {
 export class ClusterService {
   readonly enabled: boolean;
 
-  readonly isMaster: boolean;
+  readonly isPrimary: boolean;
 
   readonly isWorker: boolean;
 
@@ -28,7 +28,7 @@ export class ClusterService {
     private readonly configService: ConfigService,
   ) {
     this.enabled = this.configService.config.server.clusters != null;
-    this.isMaster = cluster.isMaster;
+    this.isPrimary = cluster.isPrimary;
     this.isWorker = cluster.isWorker || !this.enabled;
   }
 
@@ -64,7 +64,7 @@ export class ClusterService {
       data,
     };
 
-    if (this.isMaster) this.callMessageListeners(message);
+    if (this.isPrimary) this.callMessageListeners(message);
     else process.send(message);
   }
 

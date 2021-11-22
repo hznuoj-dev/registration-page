@@ -59,7 +59,7 @@ export class EventReportService {
 
     // A telegram bot could only be logged-in on one client
     // So login only on master process
-    if (this.clusterSerivce.isMaster) {
+    if (this.clusterSerivce.isPrimary) {
       this.telegramBot = eventReportConfig.telegramBotToken
         ? new Telegraf(eventReportConfig.telegramBotToken, {
             telegram: {
