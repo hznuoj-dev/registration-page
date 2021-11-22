@@ -19,6 +19,7 @@ import {
   ApproveRequestDto,
   ApproveResponseDto,
   ApproveResponseError,
+  GetOrganizationListResponseDto,
   GetRegistrationListRequestDto,
   GetRegistrationListResponseDto,
   GetRegistrationListResponseError,
@@ -217,5 +218,16 @@ export class RegistrationController {
     await this.registrationService.addOrganization(request.organizationName);
 
     return {};
+  }
+
+  @Post('getOrganizationList')
+  @ApiOperation({
+    summary: 'get organization list',
+  })
+  async getOrganizationList(): Promise<GetOrganizationListResponseDto> {
+    return {
+      registrationMetaList:
+        await this.registrationService.getOrganizationList(),
+    };
   }
 }

@@ -10,5 +10,6 @@ export class GetRegistrationListResponseDto {
   @ApiProperty()
   error?: GetRegistrationListResponseError;
 
+  @ApiProperty()
   registrationMetaList?: RegistrationMetaDto[];
 }

@@ -121,4 +121,8 @@ export class RegistrationService {
     organization.organizationName = organizationName;
     await this.registrationOrganizationRepository.save(organization);
   }
+
+  async getOrganizationList(): Promise<RegistrationOrganizationEntity[]> {
+    return await this.registrationOrganizationRepository.find();
+  }
 }
