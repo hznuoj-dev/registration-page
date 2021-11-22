@@ -37,7 +37,7 @@ export class RegistrationEntity {
   organizationId: number;
 
   @Column({ type: 'varchar', length: 80, nullable: false })
-  teamName: string;
+  name: string;
 
   @Column({ type: 'boolean', default: false, nullable: false })
   approve: boolean;

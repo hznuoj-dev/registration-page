@@ -68,7 +68,7 @@ export class RegistrationController {
     return {
       registrationMeta: {
         email: currentUser.email,
-        teamName: registration.teamName,
+        name: registration.name,
         organizationName: (await registration.organization).organizationName,
       },
     };
@@ -101,13 +101,13 @@ export class RegistrationController {
     const registrationType = await this.registrationService.registration(
       currentUser,
       organization,
-      request.teamName,
+      request.name,
     );
 
     if (registrationType !== RegistrationType.NothingHappened) {
       const action = `registration.${registrationType}`;
       const details = {
-        teamName: request.teamName,
+        name: request.name,
         organizationId: organization.id,
         organizationName: organization.organizationName,
       };
@@ -188,7 +188,7 @@ export class RegistrationController {
       Locale.en_US,
       {
         email: (await registration.user).email,
-        teamName: registration.teamName,
+        name: registration.name,
         school: (await registration.organization).organizationName,
       },
       (

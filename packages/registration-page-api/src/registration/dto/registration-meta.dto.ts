@@ -5,7 +5,7 @@ export class RegistrationMetaDto {
   email: string;
 
   @ApiProperty()
-  teamName: string;
+  name: string;
 
   @ApiProperty()
   organizationName: string;

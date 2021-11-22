@@ -55,7 +55,7 @@ export class RegistrationService {
   async registration(
     user: UserEntity,
     organization: RegistrationOrganizationEntity,
-    teamName: string,
+    name: string,
   ): Promise<RegistrationType> {
     let registrationType = RegistrationType.NothingHappened;
     let registration = await this.findRegistrationByUser(user);
@@ -68,7 +68,7 @@ export class RegistrationService {
 
     if (
       organization.id !== registration.organizationId ||
-      teamName !== registration.teamName
+      name !== registration.name
     ) {
       if (registrationType !== RegistrationType.New) {
         registrationType = RegistrationType.Modify;
@@ -76,7 +76,7 @@ export class RegistrationService {
     }
 
     registration.organizationId = organization.id;
-    registration.teamName = teamName;
+    registration.name = name;
 
     if (registrationType !== RegistrationType.NothingHappened) {
       registration.approve = false;
@@ -104,7 +104,7 @@ export class RegistrationService {
       RegistrationEntityList.map(async (registration) => {
         return <RegistrationMetaDto>{
           email: (await registration.user).email,
-          teamName: registration.teamName,
+          name: registration.name,
           organizationName: (await registration.organization).organizationName,
         };
       }),

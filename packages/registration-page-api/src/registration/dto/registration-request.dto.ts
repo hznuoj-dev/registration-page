@@ -9,5 +9,5 @@ export class RegistrationRequestDto {
 
   @ApiProperty()
   @IsString()
-  teamName: string;
+  name: string;
 }
