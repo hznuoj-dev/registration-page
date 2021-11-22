@@ -74,7 +74,7 @@ export class AuthController {
   @ApiBearerAuth()
   @ApiOperation({
     summary: 'login.',
-    description: 'Recaptcha required. Return the session token if success.',
+    description: 'Return the session token if success.',
   })
   async login(
     @Req() req: RequestWithSession,
