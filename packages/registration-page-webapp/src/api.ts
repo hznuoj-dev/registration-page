@@ -1,12 +1,10 @@
 import axios from 'axios';
 
-import customConfig from '@/../custom-config';
-
 import { useAuthToken } from '@/utils/hooks';
 
 import { message } from 'antd';
 
-const apiEndpoint = customConfig.apiEndpoint;
+const apiEndpoint = process.env.API_ENDPOINT ?? '/';
 
 const requestError = {
   400: 'Invalid request.',

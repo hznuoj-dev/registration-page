@@ -1,4 +1,5 @@
 import { defineConfig } from 'umi';
+import routes from './routes';
 
 export default defineConfig({
   devServer: {
@@ -14,7 +15,7 @@ export default defineConfig({
     type: 'none',
   },
   fastRefresh: {},
-  routes: [{ path: '/', component: '@/pages/index' }],
+  routes: routes,
   proxy: {
     '/api': {
       target: 'http://127.0.0.1:3000',
