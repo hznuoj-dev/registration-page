@@ -13,7 +13,7 @@ import { RegistrationOrganizationEntity } from './registration-organization.enti
 
 export enum ApproveState {
   PENDING = 'Pending',
-  REJECT = 'Reject',
+  REJECTED = 'Rejected',
   ACCEPTED = 'Accepted',
 }
 
