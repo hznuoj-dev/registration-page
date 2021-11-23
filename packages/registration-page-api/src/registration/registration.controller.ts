@@ -70,6 +70,7 @@ export class RegistrationController {
       registrationMeta: {
         email: currentUser.email,
         name: registration.name,
+        organizationId: registration.organizationId,
         organizationName: (await registration.organization).organizationName,
       },
     };

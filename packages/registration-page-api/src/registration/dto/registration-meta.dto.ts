@@ -8,5 +8,8 @@ export class RegistrationMetaDto {
   name: string;
 
   @ApiProperty()
+  organizationId: number;
+
+  @ApiProperty()
   organizationName: string;
 }
