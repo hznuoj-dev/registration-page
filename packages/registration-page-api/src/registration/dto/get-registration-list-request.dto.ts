@@ -1,8 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean } from 'class-validator';
+import { IsEnum } from 'class-validator';
+import { ApproveState } from '../ragistration.entity';
 
 export class GetRegistrationListRequestDto {
   @ApiProperty()
-  @IsBoolean()
-  isApproved?: boolean;
+  @IsEnum(ApproveState)
+  approveState?: ApproveState;
 }

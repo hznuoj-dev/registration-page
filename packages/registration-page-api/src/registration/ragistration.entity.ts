@@ -11,6 +11,12 @@ import {
 import { UserEntity } from '@/user/user.entity';
 import { RegistrationOrganizationEntity } from './registration-organization.entity';
 
+export enum ApproveState {
+  PENDING = 'pending',
+  REJECT = 'reject',
+  ACCEPTED = 'accepted',
+}
+
 @Entity('registration')
 export class RegistrationEntity {
   @PrimaryGeneratedColumn()
@@ -39,6 +45,6 @@ export class RegistrationEntity {
   @Column({ type: 'varchar', length: 80, nullable: false })
   name: string;
 
-  @Column({ type: 'boolean', default: false, nullable: false })
-  approve: boolean;
+  @Column({ type: 'enum', enum: ApproveState, default: ApproveState.PENDING })
+  approveState: ApproveState;
 }

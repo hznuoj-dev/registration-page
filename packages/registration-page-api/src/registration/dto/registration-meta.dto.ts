@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
+import { ApproveState } from '../ragistration.entity';
+
 export class RegistrationMetaDto {
   @ApiProperty()
   email: string;
@@ -14,5 +16,5 @@ export class RegistrationMetaDto {
   organizationName: string;
 
   @ApiProperty()
-  approve: boolean;
+  approveState: ApproveState;
 }

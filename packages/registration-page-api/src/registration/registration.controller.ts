@@ -72,7 +72,7 @@ export class RegistrationController {
         name: registration.name,
         organizationId: registration.organizationId,
         organizationName: (await registration.organization).organizationName,
-        approve: registration.approve,
+        approveState: registration.approveState,
       },
     };
   }
@@ -148,7 +148,7 @@ export class RegistrationController {
 
     return {
       registrationMetaList: await this.registrationService.getRegistrationList(
-        request.isApproved,
+        request.approveState,
       ),
     };
   }
@@ -178,18 +178,19 @@ export class RegistrationController {
       };
     }
 
-    if (registration.approve === true) {
+    if (registration.approveState === request.approveState) {
       return {
-        error: ApproveResponseError.ALREADY_APPROVED,
+        error: ApproveResponseError.STATE_UNCHANGED,
       };
     }
 
-    await this.registrationService.approve(registration);
+    await this.registrationService.approve(registration, request.approveState);
 
     await this.mailService.sendMail(
       MailTemplate.Approve,
       Locale.en_US,
       {
+        approveState: request.approveState,
         email: (await registration.user).email,
         name: registration.name,
         school: (await registration.organization).organizationName,

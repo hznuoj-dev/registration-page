@@ -4,7 +4,7 @@ import { Connection, Repository } from 'typeorm';
 
 import { UserEntity } from '@/user/user.entity';
 
-import { RegistrationEntity } from './ragistration.entity';
+import { ApproveState, RegistrationEntity } from './ragistration.entity';
 import { RegistrationOrganizationEntity } from './registration-organization.entity';
 
 import { RegistrationMetaDto } from './dto';
@@ -79,7 +79,7 @@ export class RegistrationService {
     registration.name = name;
 
     if (registrationType !== RegistrationType.NothingHappened) {
-      registration.approve = false;
+      registration.approveState = ApproveState.PENDING;
     }
 
     await this.registrationRepository.save(registration);
@@ -88,14 +88,14 @@ export class RegistrationService {
   }
 
   async getRegistrationList(
-    isApproved?: boolean,
+    approveState?: ApproveState,
   ): Promise<RegistrationMetaDto[]> {
     const RegistrationEntityList = await this.registrationRepository.find({
       relations: ['user', 'organization'],
       where:
-        isApproved != null
+        approveState != null
           ? {
-              approve: isApproved,
+              approveState,
             }
           : {},
     });
@@ -111,8 +111,11 @@ export class RegistrationService {
     );
   }
 
-  async approve(registration: RegistrationEntity): Promise<void> {
-    registration.approve = true;
+  async approve(
+    registration: RegistrationEntity,
+    approveState: ApproveState,
+  ): Promise<void> {
+    registration.approveState = approveState;
     await this.registrationRepository.save(registration);
   }
 
