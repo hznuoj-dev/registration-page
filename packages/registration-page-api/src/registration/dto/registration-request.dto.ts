@@ -9,7 +9,7 @@ export class RegistrationRequestDto {
 
   @ApiProperty()
   @IsString()
-  @MinLength(3)
+  @MinLength(2)
   @MaxLength(16)
   name: string;
 }
