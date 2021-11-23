@@ -12,4 +12,7 @@ export class RegistrationMetaDto {
 
   @ApiProperty()
   organizationName: string;
+
+  @ApiProperty()
+  approve: boolean;
 }

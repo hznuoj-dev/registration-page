@@ -72,6 +72,7 @@ export class RegistrationController {
         name: registration.name,
         organizationId: registration.organizationId,
         organizationName: (await registration.organization).organizationName,
+        approve: registration.approve,
       },
     };
   }
