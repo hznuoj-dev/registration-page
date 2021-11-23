@@ -12,9 +12,9 @@ import { UserEntity } from '@/user/user.entity';
 import { RegistrationOrganizationEntity } from './registration-organization.entity';
 
 export enum ApproveState {
-  PENDING = 'pending',
-  REJECT = 'reject',
-  ACCEPTED = 'accepted',
+  PENDING = 'Pending',
+  REJECT = 'Reject',
+  ACCEPTED = 'Accepted',
 }
 
 @Entity('registration')
