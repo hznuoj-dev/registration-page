@@ -22,7 +22,4 @@ export default defineConfig({
     },
   },
   fastRefresh: {},
-  dynamicImport: {
-    loading: '@/components/GlobalLoading',
-  },
 });

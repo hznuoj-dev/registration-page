@@ -9,12 +9,16 @@ declare namespace ApiTypes {
     }
     export interface ApproveRequestDto {
         registrationId: number;
+        approveState: "Pending" | "Rejected" | "Accepted";
     }
     export interface ApproveResponseDto {
-        error?: "PERMISSION_DENIED" | "NO_SUCH_REGISTRATION_ID" | "ALREADY_APPROVED";
+        error?: "PERMISSION_DENIED" | "NO_SUCH_REGISTRATION_ID" | "STATE_UNCHANGED";
+    }
+    export interface GetOrganizationListResponseDto {
+        registrationMetaList: ApiTypes.RegistrationOrganizationEntity[];
     }
     export interface GetRegistrationListRequestDto {
-        isApproved?: boolean;
+        approveState?: "Pending" | "Rejected" | "Accepted";
     }
     export interface GetRegistrationListResponseDto {
         error?: "PERMISSION_DENIED";
@@ -49,12 +53,18 @@ declare namespace ApiTypes {
     }
     export interface RegistrationMetaDto {
         email: string;
-        teamName: string;
+        name: string;
+        organizationId: number;
+        organizationName: string;
+        approveState: "Pending" | "Rejected" | "Accepted";
+    }
+    export interface RegistrationOrganizationEntity {
+        id: number;
         organizationName: string;
     }
     export interface RegistrationRequestDto {
         organizationId: number;
-        teamName: string;
+        name: string;
     }
     export interface RegistrationResponseDto {
         error?: "PERMISSION_DENIED" | "NO_SUCH_ORGANIZATION";
@@ -62,7 +72,7 @@ declare namespace ApiTypes {
     export type RequestBody = ApiTypes.AddOrganizationRequestDto;
     namespace Responses {
         export type $200 = ApiTypes.GetRegistrationListResponseDto;
-        export type $201 = ApiTypes.AddOrganizationResponseDto;
+        export type $201 = ApiTypes.GetOrganizationListResponseDto;
     }
     export interface SendEmailVerificationCodeRequestDto {
         email: string;

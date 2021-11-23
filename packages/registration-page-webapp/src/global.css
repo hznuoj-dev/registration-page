@@ -1,0 +1,49 @@
+::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+
+::-webkit-scrollbar-thumb{
+  width: 2px;
+  height: 2px;
+	background-color: #aaa;
+}
+
+::-moz-selection {
+	color: #fff;
+	background: #3d74aa
+}
+
+::selection {
+	color: #fff;
+	background: #3d74aa
+}
+
+.ant-btn-primary {
+  --btn-color: #3d74aa;
+  color: #fff !important;
+  background-color: var(--btn-color) !important;
+  border-color: var(--btn-color) !important;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, .12);
+  -webkit-box-shadow: 0 2px 0 rgba(0, 0, 0, .045);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, .045);
+}
+
+a {
+  color: #4183C4;
+}
+
+.h-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+/*
+  https://github.com/ant-design/ant-design/issues/22333
+*/
+.ant-table-body .ant-table-measure-row {
+  visibility: collapse;
+}

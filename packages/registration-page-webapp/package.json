@@ -29,11 +29,13 @@
     "class-validator": "^0.13.2",
     "react": "17.x",
     "react-dom": "17.x",
-    "umi": "^3.5.20"
+    "umi": "^3.5.20",
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@types/validator": "^13.7.0",
     "@umijs/preset-react": "1.x",
     "@umijs/test": "^3.5.20",
     "cross-env": "^7.0.3",

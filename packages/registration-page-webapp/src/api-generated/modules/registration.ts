@@ -9,3 +9,4 @@ export const registration = createPostApi<ApiTypes.RegistrationRequestDto, ApiTy
 export const getRegistrationList = createPostApi<ApiTypes.GetRegistrationListRequestDto, ApiTypes.GetRegistrationListResponseDto>("registration/getRegistrationList", false);
 export const approve = createPostApi<ApiTypes.ApproveRequestDto, ApiTypes.ApproveResponseDto>("registration/approve", false);
 export const addOrganization = createPostApi<ApiTypes.AddOrganizationRequestDto, ApiTypes.AddOrganizationResponseDto>("registration/addOrganization", false);
+export const getOrganizationList = createPostApi<void, ApiTypes.GetOrganizationListResponseDto>("registration/getOrganizationList", false);

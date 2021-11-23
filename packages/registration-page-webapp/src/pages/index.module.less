@@ -3,17 +3,30 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding-top: 56px;
   font-family: Georgia !important;
 }
 
 .secondRoot {
   @media screen and (max-width: 375px) {
-    width: 100%;
+    width: 96%;
+    padding-top: 16px;
   }
 
   @media screen and (min-width: 376px) {
-    width: 320px;
+    width: 338px;
+    padding-top: 36px;
+  }
+}
+
+.secondRootforTitle {
+  @media screen and (max-width: 375px) {
+    padding-top: 16px;
+    width: 86%;
+  }
+
+  @media screen and (min-width: 376px) {
+    width: 100wh;
+    padding-top: 36px;
   }
 }
 
@@ -28,5 +41,43 @@
 
 .form {
   width: 100%;
-  margin-top: 20px;
+}
+
+.form-item {
+  margin-bottom: 5px;
+}
+
+.form-item-footer {
+  margin-top: -18px;
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 13px;
+}
+
+.form-button {
+  width: 100%;
+}
+
+.approve-state {
+  margin-top: -12px;
+
+  font-size: 32px;
+  font-weight: 600;
+  font-variant: tabular-nums;
+  font-feature-settings: "tnum", "tnum";
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .Accepted {
+    color: #25ad40;
+  }
+
+  .Rejected {
+    color: #ff4f4f;
+  }
+
+  .Pending {
+    color: #6cf;
+  }
 }
