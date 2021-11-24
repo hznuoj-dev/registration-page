@@ -51,7 +51,7 @@ jobs:
           sed -i "s|base: '/'|base: '${{ env.BASE }}'|" ./config/config.ts
           sed -i "s|publicPath: '/'|publicPath: '${{ env.BASE }}/'|" ./config/config.ts
           sed -i "s|favicon: '/favicon.ico'|favicon: '${{ env.BASE }}/favicon.ico'|" ./config/config.ts
-          sed -i "s|const apiEndpoint = '/api';|const apiEndpoint = '${{ env.API_ENDPOINT }};'|" ./src/api.ts
+          sed -i "s|const apiEndpoint = '/api';|const apiEndpoint = '${{ env.API_ENDPOINT }}';|" ./src/api.ts
           yarn
           yarn build
 
