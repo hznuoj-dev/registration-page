@@ -5,8 +5,10 @@ WORKDIR /root
 COPY ./ ./api
 
 RUN cd ./api \
-  && yarn --production \
+  && yarn \
   && yarn build \
+  && rm -rf ./node_modules \
+  && yarn --production \
   && mv ./docker/docker_entry.sh /root/docker_entry.sh \
   && chmod +x /root/docker_entry.sh \
   && mv ./dist /root/ \
