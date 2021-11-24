@@ -2,8 +2,6 @@
 
 set -e -x
 
-export NODE_ENV=production
-export REGISTER_LOG_SQL=0
 export REGISTER_CONFIG_FILE=/root/config.yaml
 
 if [ X"${CONTAINER_TIMEZONE}" != X"" ]; then
