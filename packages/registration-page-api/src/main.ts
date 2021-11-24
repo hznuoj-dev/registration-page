@@ -62,11 +62,12 @@ async function initialize(): Promise<
       ).format('YYYY-MM-DD HH:mm:ss')})`
     : '';
 
-  if (cluster.isPrimary)
+  if (cluster.isPrimary) {
     Logger.log(
       `Starting ${packageInfo.name} version ${appVersion}${gitRepoVersion}`,
       'Bootstrap',
     );
+  }
 
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     ...(process.env.NODE_ENV === 'production'
