@@ -51,7 +51,7 @@ jobs:
       - name: Minify HTML Index
         uses: Dup4/minify-html-action@v9
         with:
-          src: './dist/index.html'
+          src: './packages/registration-page-webapp/dist/index.html'
 
       - name: Release All
         uses: JamesIves/github-pages-deploy-action@4.1.5
