@@ -7,8 +7,8 @@ on:
         description: 'url base'
         required: true
         default: '/'
-      api_endpoint:
-        description: 'api endpoint'
+      apiEndpoint:
+        description: 'API Endpoint'
         required: true
         default: '/'
       useGhCDN:
@@ -46,6 +46,7 @@ jobs:
           BASE: ${{ github.event.inputs.base }}
           VERSION_ID: ${{ steps.get-version-id.outputs.version-id }}
           GH_CDN_PATH: //cdn.jsdelivr.net/gh/${ GITHUB_REPOSITORY }/@${{ steps.get-version-id.outputs.version-id }}
+          API_ENDPOINT: ${{ github.event.inputs.apiEndpoint }}
         run: |
           sed -i "s|base: '/'|base: '${{ env.BASE }}'|" ./config/config.ts
           sed -i "s|publicPath: '/'|publicPath: '${{ env.BASE }}/'|" ./config/config.ts
