@@ -6,10 +6,10 @@ export default defineConfig({
     port: 8000,
     host: '0.0.0.0',
   },
-  base: '/',
   title: 'Register',
   favicon: '/favicon.ico',
   hash: true,
+  base: '/',
   publicPath: '/',
   nodeModulesTransform: {
     type: 'none',
