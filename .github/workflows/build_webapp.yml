@@ -1,0 +1,58 @@
+# yaml-language-server: $schema=https://json-schema.org/draft-07/schema#
+name: Build WebApp
+on:
+  workflow_dispatch:
+    inputs:
+      base:
+        description: 'url base'
+        required: true
+        default: '/'
+      useGhCDN:
+        type: boolean
+        description: 'whether to use jsdelivr cdn'
+        required: true
+        default: false
+
+jobs:
+  build_webapp:
+    runs-on: ubuntu-latest
+    working-directory: packages/registration-page-webapp
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Get Version ID
+        id: get-version-id
+        run: |
+          VERSION_ID=$(cat package.json | grep version | sed 's|  \"version\": \"||g' | sed 's|\",||g')
+          echo "::set-output name=version-id::$(echo $VERSION_ID)"
+          echo $VERSION_ID
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+          registry-url: https://registry.npmjs.org/
+
+      - name: Install and Build 🔧
+        env:
+          BASE: ${{ github.event.inputs.base }}
+          VERSION_ID: ${{ steps.get-version-id.outputs.version-id }}
+          GH_CDN_PATH: //cdn.jsdelivr.net/gh/${ GITHUB_REPOSITORY }/@${{ steps.get-version-id.outputs.version-id }}
+        run: |
+          sed -i "s|base: '/'|base: '${{ env.BASE }}'|" ./config/config.ts
+          sed -i "s|favicon: '/favicon.png'|favicon: '${{ env.BASE }}/favicon.png'|" ./config/config.ts
+          yarn
+          yarn build
+
+      - name: Minify HTML Index
+        uses: Dup4/minify-html-action@v9
+        with:
+          src: './dist/index.html'
+
+      - name: Release All
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: webapp-deploy
+          folder: dist
+          clean: true
