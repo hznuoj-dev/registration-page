@@ -52,7 +52,7 @@ jobs:
           sed -i "s|publicPath: '/'|publicPath: '${{ env.BASE }}/'|" ./config/config.ts
           sed -i "s|favicon: '/favicon.ico'|favicon: '${{ env.BASE }}/favicon.ico'|" ./config/config.ts
           yarn
-          yarn build
+          cross-env API_ENDPOINT=${{ env.API_ENDPOINT }} yarn build
 
       - name: Minify HTML Index
         uses: Dup4/minify-html-action@v9
