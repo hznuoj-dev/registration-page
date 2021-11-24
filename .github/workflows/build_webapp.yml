@@ -57,5 +57,5 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           branch: webapp-deploy
-          folder: dist
+          folder: packages/registration-page-webapp/dist
           clean: true
