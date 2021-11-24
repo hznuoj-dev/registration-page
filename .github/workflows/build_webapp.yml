@@ -44,6 +44,7 @@ jobs:
           GH_CDN_PATH: //cdn.jsdelivr.net/gh/${ GITHUB_REPOSITORY }/@${{ steps.get-version-id.outputs.version-id }}
         run: |
           sed -i "s|base: '/'|base: '${{ env.BASE }}'|" ./config/config.ts
+          sed -i "s|publicPath: '/'|publicPath: '${{ env.BASE }}'|" ./config/config.ts
           sed -i "s|favicon: '/favicon.png'|favicon: '${{ env.BASE }}/favicon.png'|" ./config/config.ts
           yarn
           yarn build
