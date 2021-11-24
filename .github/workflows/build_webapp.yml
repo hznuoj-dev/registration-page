@@ -9,14 +9,17 @@ on:
         default: '/'
       useGhCDN:
         type: boolean
-        description: 'whether to use jsdelivr cdn'
+        description: 'use jsdelivr cdn'
         required: true
         default: false
+
+defaults:
+  run:
+    working-directory: packages/registration-page-webapp
 
 jobs:
   build_webapp:
     runs-on: ubuntu-latest
-    working-directory: packages/registration-page-webapp
     steps:
       - name: Checkout
         uses: actions/checkout@v2
