@@ -15,6 +15,9 @@ import { isValidEmail } from '@/utils/validators';
 
 import { isEmail } from 'class-validator';
 
+const sleep = (delay: number) =>
+  new Promise((resolve) => setTimeout(resolve, delay || 0));
+
 interface LoginFormProps {
   email: string;
   emailVerificationCode: string;
@@ -62,7 +65,7 @@ const IndexPage: React.FC<{}> = () => {
     }
   }, []);
 
-  async function getRegistration() {
+  async function getRegistration(email: string = '') {
     {
       const { requestError, response } =
         await api.registration.getRegistration();
@@ -80,7 +83,7 @@ const IndexPage: React.FC<{}> = () => {
         email:
           response?.registrationMeta?.email ??
           initialState?.userMeta?.email ??
-          '',
+          email,
         name: response?.registrationMeta?.name ?? '',
         organization: response?.registrationMeta?.organizationId ?? 1,
         approveState: response?.registrationMeta?.approveState ?? 'Pending',
@@ -153,7 +156,7 @@ const IndexPage: React.FC<{}> = () => {
     } else if (response?.token) {
       signIn(response.token);
       await refresh();
-      await getRegistration();
+      await getRegistration(formProps.email);
       message.success('Login Successfully!');
     }
   }
