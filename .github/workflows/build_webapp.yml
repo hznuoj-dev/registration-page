@@ -7,6 +7,10 @@ on:
         description: 'url base'
         required: true
         default: '/'
+      api_endpoint:
+        description: 'api endpoint'
+        required: true
+        default: '/'
       useGhCDN:
         type: boolean
         description: 'use jsdelivr cdn'
