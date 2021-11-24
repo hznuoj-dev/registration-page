@@ -4,7 +4,7 @@ import { useAuthToken } from '@/utils/hooks';
 
 import { message } from 'antd';
 
-const apiEndpoint = '/';
+const apiEndpoint = '/api';
 
 const requestError = {
   400: 'Invalid request.',
@@ -44,7 +44,7 @@ async function request<T>(
 
   let response: any;
   try {
-    response = await axios(apiEndpoint + 'api/' + path, {
+    response = await axios(apiEndpoint + '/' + path, {
       method: method,
       params: params,
       data: body && JSON.stringify(body),
