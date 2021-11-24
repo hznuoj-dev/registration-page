@@ -4,7 +4,7 @@ import { useAuthToken } from '@/utils/hooks';
 
 import { message } from 'antd';
 
-const apiEndpoint = process.env.API_ENDPOINT ?? '/';
+const apiEndpoint = '/';
 
 const requestError = {
   400: 'Invalid request.',
