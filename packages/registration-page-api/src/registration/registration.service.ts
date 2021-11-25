@@ -105,7 +105,9 @@ export class RegistrationService {
         return <RegistrationMetaDto>{
           email: (await registration.user).email,
           name: registration.name,
+          organizationId: registration.organizationId,
           organizationName: (await registration.organization).organizationName,
+          approveState: registration.approveState,
         };
       }),
     );
