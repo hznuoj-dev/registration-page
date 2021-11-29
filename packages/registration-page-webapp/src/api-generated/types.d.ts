@@ -54,6 +54,7 @@ declare namespace ApiTypes {
     export interface RegistrationMetaDto {
         email: string;
         name: string;
+        id: string;
         organizationId: number;
         organizationName: string;
         approveState: "Pending" | "Rejected" | "Accepted";
@@ -65,6 +66,7 @@ declare namespace ApiTypes {
     export interface RegistrationRequestDto {
         organizationId: number;
         name: string;
+        id: string;
     }
     export interface RegistrationResponseDto {
         error?: "PERMISSION_DENIED" | "NO_SUCH_ORGANIZATION";

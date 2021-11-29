@@ -26,6 +26,7 @@ interface LoginFormProps {
 interface SubmitFormProps {
   email: string;
   name: string;
+  stuID: string;
   organization: number;
 }
 
@@ -57,12 +58,17 @@ const IndexPage: React.FC<{}> = () => {
     [] as ApiTypes.RegistrationOrganizationEntity[],
   );
 
-  useEffect((): void => {
+  useEffect(() => {
     if (getToken().length > 0) {
       getRegistration();
     } else {
       setPageState(PageState.NotLoggedIn);
     }
+
+    return () => {
+      loginForm.resetFields();
+      registrationForm.resetFields();
+    };
   }, []);
 
   async function getRegistration(email: string = '') {
@@ -84,6 +90,7 @@ const IndexPage: React.FC<{}> = () => {
           response?.registrationMeta?.email ??
           initialState?.userMeta?.email ??
           email,
+        stuID: response?.registrationMeta?.id ?? '',
         name: response?.registrationMeta?.name ?? '',
         organization: response?.registrationMeta?.organizationId ?? 1,
         approveState: response?.registrationMeta?.approveState ?? 'Pending',
@@ -187,6 +194,7 @@ const IndexPage: React.FC<{}> = () => {
 
   async function submitAction(formProps: SubmitFormProps) {
     const { requestError, response } = await api.registration.registration({
+      id: formProps.stuID,
       name: formProps.name,
       organizationId: formProps.organization,
     });
@@ -212,7 +220,7 @@ const IndexPage: React.FC<{}> = () => {
       <div className={style.root}>
         <div className={style.secondRootforTitle}>
           <span className={style.title}>
-            Hangzhou Normal U 4th Freshman Contest Registration
+            2021 Hangzhou Normal U 3rd Monthly Warm Up Contest Registration
           </span>
         </div>
       </div>
@@ -329,6 +337,28 @@ const IndexPage: React.FC<{}> = () => {
                       min: 2,
                       max: 16,
                       message: 'The length of name should be between 2-16',
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+              </Form.Item>
+
+              <Form.Item className={style['form-item']}>
+                <Form.Item
+                  name="stuID"
+                  label="StuID"
+                  tooltip="Your Student ID."
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input your Student ID!',
+                    },
+                    {
+                      type: 'string',
+                      min: 2,
+                      max: 16,
+                      message: 'The length of StuID should be between 2-16',
                     },
                   ]}
                 >
