@@ -56,6 +56,7 @@ export class RegistrationService {
     user: UserEntity,
     organization: RegistrationOrganizationEntity,
     name: string,
+    id: string,
   ): Promise<RegistrationType> {
     let registrationType = RegistrationType.NothingHappened;
     let registration = await this.findRegistrationByUser(user);
@@ -68,7 +69,8 @@ export class RegistrationService {
 
     if (
       organization.id !== registration.organizationId ||
-      name !== registration.name
+      name !== registration.name ||
+      id !== registration.id
     ) {
       if (registrationType !== RegistrationType.New) {
         registrationType = RegistrationType.Modify;
@@ -77,6 +79,7 @@ export class RegistrationService {
 
     registration.organizationId = organization.id;
     registration.name = name;
+    registration.id = id;
 
     if (registrationType !== RegistrationType.NothingHappened) {
       registration.approveState = ApproveState.PENDING;
@@ -105,6 +108,7 @@ export class RegistrationService {
         return <RegistrationMetaDto>{
           email: (await registration.user).email,
           name: registration.name,
+          id: registration.id,
           organizationId: registration.organizationId,
           organizationName: (await registration.organization).organizationName,
           approveState: registration.approveState,

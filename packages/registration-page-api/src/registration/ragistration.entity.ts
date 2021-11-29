@@ -45,6 +45,9 @@ export class RegistrationEntity {
   @Column({ type: 'varchar', length: 80, nullable: false })
   name: string;
 
+  @Column({ type: 'varchar', length: 80, nullable: true })
+  id: string;
+
   @Column({ type: 'enum', enum: ApproveState, default: ApproveState.PENDING })
   approveState: ApproveState;
 }

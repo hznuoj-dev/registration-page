@@ -12,4 +12,10 @@ export class RegistrationRequestDto {
   @MinLength(2)
   @MaxLength(16)
   name: string;
+
+  @ApiProperty()
+  @IsString()
+  @MinLength(2)
+  @MaxLength(16)
+  id: string;
 }

@@ -70,6 +70,7 @@ export class RegistrationController {
       registrationMeta: {
         email: currentUser.email,
         name: registration.name,
+        id: registration.id,
         organizationId: registration.organizationId,
         organizationName: (await registration.organization).organizationName,
         approveState: registration.approveState,
@@ -105,12 +106,14 @@ export class RegistrationController {
       currentUser,
       organization,
       request.name,
+      request.id,
     );
 
     if (registrationType !== RegistrationType.NothingHappened) {
       const action = `registration.${registrationType}`;
       const details = {
         name: request.name,
+        id: request.id,
         organizationId: organization.id,
         organizationName: organization.organizationName,
       };
